@@ -33,12 +33,15 @@ module Rouge
       state :basic do
         rule /#.*$/, Comment
 
+        rule /^(?![#$])[^\n]*/, Generic::Output
+
         rule /\b(#{KEYWORDS})\s*\b/, Keyword
         rule /\bcase\b/, Keyword, :case
 
         rule /\b(#{BUILTINS})\s*\b(?!\.)/, Name::Builtin
 
-        rule /^\S*[\$%>#] +/, Generic::Prompt
+        rule /^\S*[\$%#] +/, Generic::Prompt
+        # rule /^\S*[\$%#] +.*/, Generic::Prompt
 
         rule /(\b\w+)(=)/ do |m|
           groups Name::Variable, Operator
